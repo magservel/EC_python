@@ -1,4 +1,8 @@
 from Data import *
+from Curve import *
+from Point import *
+from Utils import *
+
 
 
 path = "/home/magali/PycharmProjects/EC/elliptic_curves/Weierstrass/"
@@ -8,3 +12,5 @@ file_path = path + folder + file
 print file_path
 
 data = Data(file_path)
+c = Curve(data.p, data.n, data.a4, data.a6)
+p = Point(data.gx, data.gy, c, False)
