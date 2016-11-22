@@ -14,7 +14,6 @@ def autre(a, m):
         return x % m
 
 def invmodp(k, p):
-    print "INVMOD"
     '''
     The multiplicitive inverse of a in the integers modulo p.
     Return b s.t.
@@ -44,4 +43,10 @@ def invmodp(k, p):
     assert (k * x) % p == 1
 
     return x % p
+
+def hash(m): #TODO: hash function
+    return m
+
+def unhash(m): #TODO: unhash function
+    return m
 

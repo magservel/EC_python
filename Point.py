@@ -1,8 +1,6 @@
-from Curve import *
 from Utils import *
 class Point:
     def __init__(self, x, y, c, inf):
-        # type: (object, object, object, object) -> object
         self.x = x % c.p
         self.y = y % c.p
         self.c = c
@@ -18,7 +16,6 @@ class Point:
         return Point(self.x, (-self.y)%self.c.p, self.c, self.inf)
 
     def double (self):
-        print "DOUBLE"
         t = (3* pow(self.x, 2) + self.c.a4)*invmodp(2*self.y, self.c.p)
         x = (pow(t, 2) - self.x - self.x) % self.c.p
         y = (-(self.y + t * (x - self.x))) % self.c.p
@@ -50,6 +47,7 @@ class Point:
 
     def mul(self, k):
         k = k % self.c.p
+        print
         if k < 0 :
             return -self.mul(-k)
         if k == 0:
