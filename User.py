@@ -1,11 +1,11 @@
-from Point import *
-from random import randint
+#from Point import *
+f#rom random import randint
 
-class User:
-    def __init__(self, p):
-        self.m = randint(1, p-1)
-        print self.m
+#class User:
+#    def __init__(self, p):
+#        self.m = randint(1, p-1)
+#        print self.m
 
 
-    def computeP(self, point):
-        return point.mul(self.m)
+#    def computeP(self, point):
+#        return point.mul(self.m)

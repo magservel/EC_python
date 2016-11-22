@@ -2,7 +2,8 @@
 #
 #
 #
-from User import *
+from random import randint
+
 
 class DH:
     def __init__(self, point):
@@ -23,3 +24,12 @@ class DH:
             print "Key Exchange is a succes !"
         else:
             print "Key Exchange failed."
+
+
+class User:
+    def __init__(self, p):
+        self.m = randint(1, p - 1)
+        print self.m
+
+    def computeP(self, point):
+        return

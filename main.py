@@ -1,8 +1,9 @@
 from Data import *
 from Curve import *
 from Point import *
-from Utils import *
+from Utils import invmodp
 from DH import *
+from ElGammal import *
 
 
 
@@ -17,7 +18,11 @@ data = Data(file_path)
 c = Curve(data.p, data.n, data.a4, data.a6)
 p = Point(data.gx, data.gy, c, False)
 
-dh = DH(p)
-p = p.double()
-p = p.mul(4)
-dh.start()
+
+#print p.double()
+#dh = DH(p)
+#dh.start()
+eg = ElGammal(data.p, data.n)
+eg.alice.message = 6678637864379369236946747684687684
+eg.start()
+

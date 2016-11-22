@@ -8,7 +8,7 @@ import os
 class Data:
     def __init__(self, path):
         self.parser(path)
-        self.print_data()
+           #self.print_data()
 
     def parser(self, path):
         with open(path, "r") as data_file:
