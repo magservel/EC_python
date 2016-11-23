@@ -27,7 +27,7 @@ def invmodp(k, p):
         # k ** -1 = p - (-k) ** -1  (mod p)
         return p - invmodp(-k, p)
 
-    # Extended Euclidean algorithm.
+    # Extended Euclidean algorithm
     s, old_s = 0, 1
     t, old_t = 1, 0
     r, old_r = p, k
