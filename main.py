@@ -1,9 +1,14 @@
+import binascii
+
 from Data import *
 from Curve import *
 from Point import *
 from DH import *
 from ElGammal import *
 from DSA import *
+from STS import *
+
+from Utils import *
 
 
 
@@ -18,18 +23,23 @@ data = Data(file_path)
 c = Curve(data.p, data.n, data.a4, data.a6)
 point = Point(data.gx, data.gy, c, False)
 
-
-#print p.double()
-#dh = DH(p)
-#dh.start()
+dh = DH(point)
+dh.start()
 
 #eg = ElGammal(data.p, point)
 #eg.alice.message = 7643876387658787465874682684654794659746492
 #eg.start()
 
-dsa = DSA(data.p, point)
-dsa.alice.message = 12345
-dsa.start()
+#dsa = DSA(data.n, point)
+#dsa.alice.message = "Bonjour Bob, c'est Alice"
+#dsa.start()
 
+#sts = STS()
+
+#print binascii.crc32("hello world")
+# Or, in two pieces:
+#crc = binascii.crc32("hello")
+#crc = binascii.crc32(" world", crc) & 0xffffffff
+#print 'crc32 = 0x%08x' % crc
 
 

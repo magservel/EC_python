@@ -32,4 +32,4 @@ class User:
         print self.m
 
     def computeP(self, point):
-        return
+        return point.mul(self.m)

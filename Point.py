@@ -63,8 +63,5 @@ class Point:
                 i = i << 1
                 q = q + q
 
-        assert ( (self.c.contains(r.x, r.y))), \
-                     "C[POINT MUL ERROR]: Point initialise not on curve."
-
         return r
 

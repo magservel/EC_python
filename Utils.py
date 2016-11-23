@@ -1,3 +1,4 @@
+from hashlib import sha256
 
 def egcd(a, b):
     if a == 0:
@@ -44,9 +45,11 @@ def invmodp(k, p):
 
     return x % p
 
-def hash(m): #TODO: hash function
-    return m
+def H(m): #TODO: hash function
+    print "H: "
+    h = sha256(m)
+    h = h.hexdigest()
+    n = int(h, base=16)
+    return n
 
-def unhash(m): #TODO: unhash function
-    return m
 
