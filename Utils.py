@@ -45,7 +45,7 @@ def invmodp(k, p):
 
     return x % p
 
-def H(m): #TODO: hash function
+def H(m):
     print "H: "
     h = sha256(m)
     h = h.hexdigest()
