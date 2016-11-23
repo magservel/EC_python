@@ -46,10 +46,14 @@ def invmodp(k, p):
     return x % p
 
 def H(m):
-    print "H: "
     h = sha256(m)
     h = h.hexdigest()
     n = int(h, base=16)
     return n
 
+def to_int(m): #TODO to_int
+    return m
+
+def to_str(m): #TODO to_str
+    return m
 

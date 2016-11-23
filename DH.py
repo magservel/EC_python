@@ -1,35 +1,16 @@
-#
-#
-#
-#
-from random import randint
+from User import *
 
+def start_DH(point, p, n):
+    alice = User(p, "No message")
+    bob = User(p, "No message")
 
-class DH:
-    def __init__(self, point):
-        self.point = point
-        print "Alice key is "
-        self.alice = User(point.c.p)
-        print "Bob key is"
-        self.bob = User(point.c.p)
+    aP = alice.computePoint(point)
+    bP = bob.computePoint(point)
 
-    def start(self):
-        self.aP = self.alice.computeP(self.point)
-        self.bP = self.bob.computeP(self.point)
+    abP = alice.computePoint(bP)
+    baP = bob.computePoint(aP)
 
-        self.abP = self.alice.computeP(self.bP)
-        self.baP = self.bob.computeP(self.aP)
-
-        if self.abP == self.baP:
-            print "Key Exchange is a succes !"
-        else:
-            print "Key Exchange failed."
-
-
-class User:
-    def __init__(self, p):
-        self.m = randint(1, p - 1)
-        print self.m
-
-    def computeP(self, point):
-        return point.mul(self.m)
+    if abP == baP:
+        return 0
+    else:
+        return 1
