@@ -8,7 +8,6 @@ def start_DSA(point, n, m_send):
     dsa = DSA(point, n)
     print "Alice initializing ..."
     alice = User(n , m_send)
-    #bob = User(n)
 
     A = alice.generatePublicKey(point)
     print "Alice signs: " + m_send
