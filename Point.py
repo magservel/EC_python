@@ -15,6 +15,9 @@ class Point:
 
         return Point(self.x, (-self.y)%self.c.p, self.c, self.inf)
 
+    def __str__(self):
+        return str(self.x) + '$' + str(self.y)
+
     def double (self):
         t = (3* pow(self.x, 2) + self.c.a4)*invmodp(2*self.y, self.c.p)
         x = (pow(t, 2) - self.x - self.x) % self.c.p

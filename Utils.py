@@ -1,19 +1,5 @@
 from hashlib import sha256
 
-def egcd(a, b):
-    if a == 0:
-        return (b, 0, 1)
-    else:
-        g, y, x = egcd(b % a, a)
-        return (g, x - (b // a) * y, y)
-
-def autre(a, m):
-    g, x, y = egcd(a, m)
-    if g != 1:
-        raise Exception('modular inverse does not exist')
-    else:
-        return x % m
-
 def invmodp(k, p):
     '''
     The multiplicitive inverse of a in the integers modulo p.
@@ -51,9 +37,28 @@ def H(m):
     n = int(h, base=16)
     return n
 
-def to_int(m): #TODO to_int
+
+def to_int(s):
+    number = 0
+    for e in [ord(c) for c in s]:
+        number = (number * 0x110000) + e
+    return number
+
+def to_str(number):
+    l = []
+    while(number != 0):
+        l.append(chr(number % 0x110000))
+        number = number // 0x110000
+    return ''.join(reversed(l))
+
+def formated_string(x, size):
+    while len(x) < size*8:
+        x = '0' + x
+    return x
+
+def lenMod16(m):
+    while (len(m) % 16 != 0):
+        m = '0' + m
     return m
 
-def to_str(m): #TODO to_str
-    return m
 

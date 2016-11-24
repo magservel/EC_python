@@ -13,3 +13,6 @@ class User:
 
     def computePoint(self, point):
         return point.mul(self.x)
+
+    def addSharedSecret(self, K):
+        self.K = K

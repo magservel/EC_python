@@ -25,19 +25,23 @@ class DSA:
         self.point = point
         self.n = n
 
-
-    def sign(self, alice):
+    def sign(self, user, m = ""):
+        # Get (x, y) = k.Point (with 1 < k < n-1)
         k = randint(1, self.n-1)
         T = self.point.mul(k)
         x, y = T.x, T.y
 
+        # Compute (u, v)
+        if m == "":
+            m = user.message
         u = x % self.n
-        v = ((H(alice.message) + alice.x*u) * invmodp(k, self.n)) % self.n
+        v = ((H(m) + user.x*u) * invmodp(k, self.n)) % self.n
 
+        # Check that u and v != 0
         if u == 0 or v == 0:
-            return (self.sign(alice))
+            return (self.sign(user, m))
         else:
-            return u, v, alice.message
+            return u, v, m
 
     def verify(self, A, m, u, v):
         #  1 < u < n-1
