@@ -23,7 +23,7 @@ def start_STS(point, p, n):
     a_return, error_m = sts.verify_cipher(alice, b_cipher, A, B)
     print error_m
 
-    return a_return and b_return
+    return a_return + b_return
 
 class STS:
     def __init__(self, point, p, n):
@@ -53,8 +53,6 @@ class STS:
         v = int(v)
         if C != self.conc(Y, X):
             return 1, "[STS ERROR] Received message is different from expected"
-
-
 
         dsa = DSA(self.point, self.n)
         nb, error_m = dsa.verify(Y, C, u, v)

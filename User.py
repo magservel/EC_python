@@ -2,7 +2,7 @@ from Point import *
 from random import randint
 
 class User:
-    def __init__(self, p, m):
+    def __init__(self, p, m = ""):
         self.x = randint(1, p-1)
         self.message = m
 

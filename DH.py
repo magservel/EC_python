@@ -1,15 +1,21 @@
 from User import *
 
-def start_DH(point, p):
-    alice = User(p, "No message")
-    bob = User(p, "No message")
+p_bob = 20* "\t"
+p_centr = 10*"\t"
 
+def start_DH(point, p):
+    print "Alice initializing ..."
+    alice = User(p)
+    print p_bob + "Bob initializing ..."
+    bob = User(p)
+
+    print p_centr + "Exchanging key ..."
     abP, baP = exchangeSecret_DH(point, alice, bob, True)
 
     if abP == baP:
-        return 0
+        return 0, "Keys are equal, DH succeded !"
     else:
-        return 1
+        return 1, "Diffre-Hellman failed."
 
 def exchangeSecret_DH(point, alice, bob, _return = False):
     aP = alice.computePoint(point)
