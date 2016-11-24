@@ -1,14 +1,10 @@
-from random import randint
-from Utils import *
-from Point import *
 from User import *
 
-def start_DSA(point, p, n, m_send):
-
+def start_DSA(point, n, m_send):
     dsa = DSA(point, n)
 
     alice = User(n , m_send)
-    bob = User(n, 0) #TODO change to str
+    #bob = User(n)
 
     A = alice.generatePublicKey(point)
     u, v, m = dsa.sign(alice)
@@ -18,14 +14,14 @@ def start_DSA(point, p, n, m_send):
         print error_m
     return nb
 
-
-
 class DSA:
     def __init__(self,point, n):
         self.point = point
         self.n = n
 
     def sign(self, user, m = ""):
+        # type: (User, str) -> int, int, str
+
         # Get (x, y) = k.Point (with 1 < k < n-1)
         k = randint(1, self.n-1)
         T = self.point.mul(k)

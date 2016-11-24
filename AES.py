@@ -18,7 +18,7 @@ def encrypt_AES(user, message):
 def decrypt_AES(user, ciphertext):
     K = getAESKey(user)
     aes = AES.new(K)
-    aes.decrypt(ciphertext)
+    return aes.decrypt(ciphertext)
 
 
 
