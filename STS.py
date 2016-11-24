@@ -2,8 +2,8 @@ from DH import *
 from AES import *
 from DSA import *
 
-p_bob = 20* "\t"
-p_centr = 10*"\t"
+p_bob = 15* "\t"
+p_centr = 7*"\t"
 
 def start_STS(point, p, n):
     sts = STS(point, p, n)

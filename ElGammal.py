@@ -1,10 +1,7 @@
-from random import randint
-from Utils import *
-from Point import *
 from User import *
 
-p_bob = 20* "\t"
-p_centr = 10*"\t"
+p_bob = 15* "\t"
+p_centr = 7*"\t"
 
 def start_ElGammal(point, p, m_send):
 

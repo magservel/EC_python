@@ -3,7 +3,7 @@ from Data import *
 from ElGammal import *
 from STS import *
 
-center = 10*"\t"
+center = 7*"\t"
 
 print center  + "Opening file ..."
 path = "/home/magali/PycharmProjects/EC/elliptic_curves/Weierstrass/"
@@ -52,4 +52,5 @@ print center + "###########################################"
 raw_input(center + "              Start ?")
 sts_return = start_STS(point, data.p, data.n)
 
+print center  + "############## END OF PROGRAM ############"
 
