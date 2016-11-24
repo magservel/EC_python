@@ -65,7 +65,7 @@ class STS:
         if nb != 0:
             return nb, error_m
 
-        return 0, "[STS] Verification OK"
+        return 0, "[STS] Verification OK, shared secret validated"
 
 
 

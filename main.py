@@ -1,14 +1,10 @@
 from Curve import *
-from DH import start_DH
-from DSA import *
 from Data import *
-from User import *
 from ElGammal import *
 from STS import *
-#
-#### MAIN ####
-#
+
 center = 10*"\t"
+
 print center  + "Opening file ..."
 path = "/home/magali/PycharmProjects/EC/elliptic_curves/Weierstrass/"
 folder = "cw256/"
@@ -51,9 +47,9 @@ print center + error_m
 
 print
 print center + "###########################################"
-print center + "                   DSA"
+print center + "                   STS"
 print center + "###########################################"
-raw_input(center + "              STS ?")
+raw_input(center + "              Start ?")
 sts_return = start_STS(point, data.p, data.n)
 
 
