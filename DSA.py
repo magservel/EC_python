@@ -1,18 +1,28 @@
 from User import *
 
-def start_DSA(point, n, m_send):
-    dsa = DSA(point, n)
+p_bob = 20* "\t"
+p_centr = 10*"\t"
 
+def start_DSA(point, n, m_send):
+
+    dsa = DSA(point, n)
+    print "Alice initializing ..."
     alice = User(n , m_send)
     #bob = User(n)
 
     A = alice.generatePublicKey(point)
-    u, v, m = dsa.sign(alice)
+    print "Alice signs: " + m_send
 
+    u, v, m = dsa.sign(alice)
+    print "with "
+    print " u: " + str(u)
+    print " v: " + str(v)
+    print " m: " + str(m)
+
+    print p_bob + "Verification ..."
     nb, error_m = dsa.verify(A, m, u, v)
-    if nb != 0:
-        print error_m
-    return nb
+
+    return nb, error_m
 
 class DSA:
     def __init__(self,point, n):
@@ -64,4 +74,4 @@ class DSA:
         # u = x%n
             if u != x%self.n :
                 return 1, "[DSA ERROR] VERIFICATION: u != x%n"
-            return 0, "[DSA] Verification OK"
+            return 0, "[DSA] Verification OK, no usurpation detected"

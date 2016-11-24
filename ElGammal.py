@@ -3,23 +3,35 @@ from Utils import *
 from Point import *
 from User import *
 
-def start_ElGammal(point, p, n, m_send):
+p_bob = 20* "\t"
+p_centr = 10*"\t"
+
+def start_ElGammal(point, p, m_send):
 
     eg = ElGammal(point, p)
 
+    print "Alice initializing ..."
     alice = User(p, m_send)
-    bob = User(p, 0) #TODO change to str
-
     A = alice.generatePublicKey(point)
+
+    print p_bob + "Bob initializing ..."
+    bob = User(p)
     B = bob.generatePublicKey(point)
 
-    c1, c2 = eg.encode(alice, B)
+
+    print "Alice sends: " + m_send
+    c1, c2 = eg.encode(alice, A, B)
+    print "encrypted as "
+    print "   C1: " + str(c1)
+    print " C2.x: " + str(c2.x)
+    print " C2.y: " + str(c2.y)
     m_received = eg.decode(bob, c1, c2)
+    print p_bob + "Bob decryptes: " + m_received
 
     if m_send == m_received:
-        return 0
+        return 0, "El Gammal ended correctly."
     else:
-        return 1
+        return 1, "El Gammal failed."
 
 
 class ElGammal:
@@ -27,9 +39,9 @@ class ElGammal:
         self.point = point
         self.p = p
 
-    def encode(self, alice, B):
+    def encode(self, alice, A, B):
         c1 = to_int(alice.message)+ B.mul(alice.x).x
-        c2 = alice.generatePublicKey(self.point)
+        c2 = A
         return c1, c2
 
     def decode(self, bob, c1, c2):

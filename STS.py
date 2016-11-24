@@ -2,23 +2,29 @@ from DH import *
 from AES import *
 from DSA import *
 
+p_bob = 20* "\t"
+p_centr = 10*"\t"
+
 def start_STS(point, p, n):
     sts = STS(point, p, n)
 
+    print "Alice initializing ..."
     alice = User(p, "")
-    bob = User(p, "")
-
     A = alice.generatePublicKey(point)
+
+    print p_bob + "Bob initializing ..."
+    bob = User(p, "")
     B = bob.generatePublicKey(point)
 
+    print p_centr + "Exchange shared secret ..."
     exchangeSecret_DH(point, alice, bob)
 
     print "Alice send cipher to Bob ..."
     a_cipher = sts.compute_cipher(alice, A, B)
     b_return, error_m = sts.verify_cipher(bob, a_cipher, B, A)
-    print error_m
+    print p_bob + error_m
 
-    print "Bob send cipher to Alice ..."
+    print p_bob + "Bob send cipher to Alice ..."
     b_cipher = sts.compute_cipher(bob, B, A)
     a_return, error_m = sts.verify_cipher(alice, b_cipher, A, B)
     print error_m

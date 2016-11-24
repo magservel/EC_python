@@ -12,6 +12,10 @@ def start_DH(point, p):
     print p_centr + "Exchanging key ..."
     abP, baP = exchangeSecret_DH(point, alice, bob, True)
 
+    print "Alice key: ", abP
+    print "Bob key:   ", baP
+    print
+
     if abP == baP:
         return 0, "Keys are equal, DH succeded !"
     else:

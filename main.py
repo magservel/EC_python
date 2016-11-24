@@ -11,8 +11,8 @@ from STS import *
 center = 10*"\t"
 print center  + "Opening file ..."
 path = "/home/magali/PycharmProjects/EC/elliptic_curves/Weierstrass/"
-folder = "cw512/"
-file = "w512-001.gp"
+folder = "cw256/"
+file = "w256-001.gp"
 file_path = path + folder + file
 print center + file_path
 #
@@ -25,19 +25,35 @@ print center + "Data Loaded!"
 
 
 print
-raw_input(center + "Start the Diffre-Hellman key exchange ?")
+print center + "###########################################"
+print center + "               Diffre-Hellman"
+print center + "###########################################"
+
+raw_input(center + "              Start ?")
 dh_return, error_m = start_DH(point, data.p)
 print center + error_m
 #
-#eg_succed = start_ElGammal(point, data.p, data.n, "Hello Bob")
-#assert eg_succed == 0, center + "[ASSERT ERROR] El Gammal failed"
-print center +  "El Gammal succeded !"
+print
+print center + "###########################################"
+print center + "               El Gammal"
+print center + "###########################################"
+raw_input(center + "              Start ?")
+eg_return, error_m = start_ElGammal(point, data.p, "Hello Bob")
+print center + error_m
 
-#dsa_succed = start_DSA(point, data.n, "Bonjour Bob, ici Alice")
-#assert dsa_succed == 0, "[ASSERT ERROR] DSA failed"
-print center + "DSA succeded !"
+print
+print center + "###########################################"
+print center + "                   DSA"
+print center + "###########################################"
+raw_input(center + "              Start ?")
+dsa_return, error_m = start_DSA(point, data.n, "Bonjour Bob, ici Alice")
+print center + error_m
 
-#sts_succed = start_STS(point, data.p, data.n)
-#assert sts_succed == 0, "[ASSERT ERROR] STS failed"
-print center +  "STS succeded !"
+print
+print center + "###########################################"
+print center + "                   DSA"
+print center + "###########################################"
+raw_input(center + "              STS ?")
+sts_return = start_STS(point, data.p, data.n)
+
 
