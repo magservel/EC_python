@@ -1,35 +1,35 @@
-#
-#
-#
-#
-from random import randint
+from User import *
 
+p_bob = 15* "\t"
+p_centr = 7*"\t"
 
-class DH:
-    def __init__(self, point):
-        self.point = point
-        print "Alice key is "
-        self.alice = User(point.c.p)
-        print "Bob key is"
-        self.bob = User(point.c.p)
+def start_DH(point, p):
+    print "Alice initializing ..."
+    alice = User(p)
+    print p_bob + "Bob initializing ..."
+    bob = User(p)
 
-    def start(self):
-        self.aP = self.alice.computeP(self.point)
-        self.bP = self.bob.computeP(self.point)
+    print p_centr + "Exchanging key ..."
+    abP, baP = exchangeSecret_DH(point, alice, bob, True)
 
-        self.abP = self.alice.computeP(self.bP)
-        self.baP = self.bob.computeP(self.aP)
+    print "Alice key: ", abP
+    print "Bob key:   ", baP
+    print
 
-        if self.abP == self.baP:
-            print "Key Exchange is a succes !"
-        else:
-            print "Key Exchange failed."
+    if abP == baP:
+        return 0, "Keys are equal, DH succeded !"
+    else:
+        return 1, "Diffre-Hellman failed."
 
+def exchangeSecret_DH(point, alice, bob, _return = False):
+    aP = alice.computePoint(point)
+    bP = bob.computePoint(point)
 
-class User:
-    def __init__(self, p):
-        self.m = randint(1, p - 1)
-        print self.m
+    abP = alice.computePoint(bP)
+    baP = bob.computePoint(aP)
 
-    def computeP(self, point):
-        return point.mul(self.m)
+    alice.addSharedSecret(abP)
+    bob.addSharedSecret(baP)
+
+    if _return:
+        return abP, baP

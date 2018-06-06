@@ -1,4 +1,3 @@
-
 class Curve(object):
     def __init__(self, p, n, a4, a6):
         self.p = p

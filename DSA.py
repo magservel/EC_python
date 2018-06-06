@@ -1,75 +1,76 @@
-from random import randint
-from Utils import *
-from Point import *
+from User import *
+
+p_bob = 15* "\t"
+p_centr = 7*"\t"
+
+def start_DSA(point, n, m_send):
+
+    dsa = DSA(point, n)
+    print "Alice initializing ..."
+    alice = User(n , m_send)
+
+    A = alice.generatePublicKey(point)
+    print "Alice signs: " + m_send
+
+    u, v, m = dsa.sign(alice)
+    print "with "
+    print " u: " + str(u)
+    print " v: " + str(v)
+    print " m: " + str(m)
+
+    print p_bob + "Verification ..."
+    nb, error_m = dsa.verify(A, m, u, v)
+
+    return nb, error_m
 
 class DSA:
-    def __init__(self, n, point):
-        self.n = n
+    def __init__(self,point, n):
         self.point = point
+        self.n = n
 
-        self.alice = User(n)
-        self.bob = User(n)
+    def sign(self, user, m = ""):
+        # type: (User, str) -> int, int, str
 
-    def start(self):
-        self.A = self.alice.generatePublicKey(self.point)
-        u, v, m = self.alice.sign(self.n, self.point)
-        self.bob.verify(self.n, self.point, u, v, self.A, m)
-
-
-
-class User:
-    def __init__(self, n):
-        self.x = randint(1, n-1)
-        self.message = 1234
-
-    def generatePublicKey(self, g):
-        self.X = g.mul(self.x)
-        assert g.c.contains(self.X.x, self.X.y), \
-            "[DSA ERROR] Generate public key failed"
-        return self.X
-
-    def sign(self, n, point):
-        k = randint(1, n-1)
-        T = point.mul(k)
+        # Get (x, y) = k.Point (with 1 < k < n-1)
+        k = randint(1, self.n-1)
+        T = self.point.mul(k)
         x, y = T.x, T.y
 
-        u = x %n
-        v = ((H(self.message) + self.x*u) * invmodp(k, n)) % n
+        # Compute (u, v)
+        if m == "":
+            m = user.message
+        u = x % self.n
+        v = ((H(m) + user.x*u) * invmodp(k, self.n)) % self.n
 
+        # Check that u and v != 0
         if u == 0 or v == 0:
-            return (self.sign(n, point))
+            return (self.sign(user, m))
         else:
-            return u, v, self.message
+            return u, v, m
 
-    def verify(self, n, point, u, v, A, m):
+    def verify(self, A, m, u, v):
         #  1 < u < n-1
-        if u < 1 or u > n-1:
-            print "[DSA ERROR] VERIFICATION: u is not in the interval"
-            return
+        if u < 1 or u > self.n-1:
+            return 1, "[DSA ERROR] VERIFICATION: u is not in the interval"
         # 1 < v < n-1
-        elif v < 1 or v > n-1:
-            print "[DSA ERROR] VERIFICATION: v is not in the interval"
-            return
+        elif v < 1 or v > self.n-1:
+            return 1, "[DSA ERROR] VERIFICATION: v is not in the interval"
         # A != O
         elif A.inf:
-            print "[DSA ERROR] VERIFICATION: Alice public key is (0, 0) "
-            return
+            return 1, "[DSA ERROR] VERIFICATION: Alice public key is (0, 0) "
         # A belongs to C
-        elif not(point.c.contains(A.x, A.y)):
-            print "[DSA ERROR] VERIFICATION: Alice public key is not on the curve "
-            return
+        elif not(self.point.c.contains(A.x, A.y)):
+            return 1, "[DSA ERROR] VERIFICATION: Alice public key is not on the curve "
         # nA = O
-        elif not(A.mul(n).inf):
-            print "[DSA ERROR] VERIFICATION: A*n != 0 "
-            return
+        elif not(A.mul(self.n).inf):
+            return 1, "[DSA ERROR] VERIFICATION: A*n != 0 "
         else:
-            tmp = (H(m)*invmodp(v, n)) % n
-            T = point.mul(tmp)
-            tmp = u*invmodp(v, n) % n
+            tmp = (H(m)*invmodp(v, self.n)) % self.n
+            T = self.point.mul(tmp)
+            tmp = u*invmodp(v, self.n) % self.n
             T = T + A.mul(tmp)
             x = T.x
         # u = x%n
-            if u != x%n :
-                print "[DSA ERROR] VERIFICATION: u != x%n"
-                return
-            print "[DSA] Verification OK"
+            if u != x%self.n :
+                return 1, "[DSA ERROR] VERIFICATION: u != x%n"
+            return 0, "[DSA] Verification OK, no usurpation detected"

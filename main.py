@@ -1,45 +1,56 @@
-import binascii
-
-from Data import *
 from Curve import *
-from Point import *
-from DH import *
+from Data import *
 from ElGammal import *
-from DSA import *
 from STS import *
 
-from Utils import *
+center = 7*"\t"
 
-
-
-
+print center  + "Opening file ..."
 path = "/home/magali/PycharmProjects/EC/elliptic_curves/Weierstrass/"
 folder = "cw256/"
-file = "w256-005.gp"
+file = "w256-001.gp"
 file_path = path + folder + file
-print file_path
-
+print center + file_path
+#
+print center + "Loading data ..."
 data = Data(file_path)
 c = Curve(data.p, data.n, data.a4, data.a6)
 point = Point(data.gx, data.gy, c, False)
+print center + "Data Loaded!"
 
-dh = DH(point)
-dh.start()
 
-#eg = ElGammal(data.p, point)
-#eg.alice.message = 7643876387658787465874682684654794659746492
-#eg.start()
 
-#dsa = DSA(data.n, point)
-#dsa.alice.message = "Bonjour Bob, c'est Alice"
-#dsa.start()
+print
+print center + "###########################################"
+print center + "               Diffre-Hellman"
+print center + "###########################################"
 
-#sts = STS()
+raw_input(center + "              Start ?")
+dh_return, error_m = start_DH(point, data.p)
+print center + error_m
+#
+print
+print center + "###########################################"
+print center + "               El Gammal"
+print center + "###########################################"
+raw_input(center + "              Start ?")
+eg_return, error_m = start_ElGammal(point, data.p, "Hello Bob")
+print center + error_m
 
-#print binascii.crc32("hello world")
-# Or, in two pieces:
-#crc = binascii.crc32("hello")
-#crc = binascii.crc32(" world", crc) & 0xffffffff
-#print 'crc32 = 0x%08x' % crc
+print
+print center + "###########################################"
+print center + "                   DSA"
+print center + "###########################################"
+raw_input(center + "              Start ?")
+dsa_return, error_m = start_DSA(point, data.n, "Bonjour Bob, ici Alice")
+print center + error_m
 
+print
+print center + "###########################################"
+print center + "                   STS"
+print center + "###########################################"
+raw_input(center + "              Start ?")
+sts_return = start_STS(point, data.p, data.n)
+
+print center  + "############## END OF PROGRAM ############"
 

@@ -1,61 +1,47 @@
-from random import randint
-from Utils import *
-from Point import *
+from User import *
+
+p_bob = 15* "\t"
+p_centr = 7*"\t"
+
+def start_ElGammal(point, p, m_send):
+
+    eg = ElGammal(point, p)
+
+    print "Alice initializing ..."
+    alice = User(p, m_send)
+    A = alice.generatePublicKey(point)
+
+    print p_bob + "Bob initializing ..."
+    bob = User(p)
+    B = bob.generatePublicKey(point)
+
+
+    print "Alice sends: " + m_send
+    c1, c2 = eg.encode(alice, A, B)
+    print "encrypted as "
+    print "   C1: " + str(c1)
+    print " C2.x: " + str(c2.x)
+    print " C2.y: " + str(c2.y)
+    m_received = eg.decode(bob, c1, c2)
+    print p_bob + "Bob decryptes: " + m_received
+
+    if m_send == m_received:
+        return 0, "El Gammal ended correctly."
+    else:
+        return 1, "El Gammal failed."
+
 
 class ElGammal:
-    def __init__(self, p, g):
+    def __init__(self, point, p):
+        self.point = point
         self.p = p
-        self.g = g
-        self.bob = User(p)
-        self.alice = User(p)
 
-    def start(self):
-        print "Public Key Construction"
-        self.B = self.bob.generatePublicKey(self.g)
-        print "B : ", self.B
-        self.A = self.alice.generatePublicKey(self.g)
-        print "A : ", self.A
-
-
-        print "Encode message exchange"
-        (C1, C2) = self.alice.encode(self.B, self.p)
-
-        print "Alice sends ", self.alice.message
-        print "C1 = ",C1
-        print "C2 = ", C2
-
-        self.bob.decode(C1, C2, self.p)
-        print "Bob decodes : ", self.bob.message
-
-
-        if self.alice.message == self.bob.message:
-            print "The communication succeded !"
-        else:
-            print "The communication failed"
-
-
-
-
-class User:
-    def __init__(self, p):
-        self.x = randint(1, p-1)
-        self.message = 1234
-
-    def generatePublicKey(self, g):
-        self.X = g.mul(self.x)
-        # self.X = pow(g, self.x, p)
-        return self.X
-
-
-    def encode(self, B, p):
-        c1 = hash(self.message)+ B.mul(self.x).x
-        # c1 = (self.message * pow(B, self.x, p)) % p
-        c2 = self.X
+    def encode(self, alice, A, B):
+        c1 = to_int(alice.message)+ B.mul(alice.x).x
+        c2 = A
         return c1, c2
 
-    def decode(self, c1, c2, p):
-        m = (c1 - c2.mul(self.x).x) %p
-        #r1 = pow(c1, self.x, p)
-        #r1 = invmodp(r1, p)
-        #m = (c2 * r1) %p
-        self.message = unhash(m)
+    def decode(self, bob, c1, c2):
+        m = (c1 - c2.mul(bob.x).x) % self.p
+        bob.message = to_str(m)
+        return bob.message
