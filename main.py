@@ -6,7 +6,7 @@ from STS import *
 center = 7*"\t"
 
 print center  + "Opening file ..."
-path = "/home/magali/PycharmProjects/EC/elliptic_curves/Weierstrass/"
+path = "./elliptic_curves/Weierstrass/"
 folder = "cw256/"
 file = "w256-001.gp"
 file_path = path + folder + file
